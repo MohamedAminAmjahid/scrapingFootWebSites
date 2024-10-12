@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Efficiency Stats</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Add Chart.js -->
+    <style>
+        body {
+            background-color: #2a2a2a; /* Dark background */
+            color: #fff; /* White text */
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .card {
+            background-color: #333; /* Dark card background */
+            color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .table {
+            margin-bottom: 0;
+        }
+        .table th {
+            background-color: #444; /* Darker background for table headers */
+            border-color: #555; /* Border color for table */
+        }
+        .table td {
+            border-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Football Stats</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/topsoccers">Top Players</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stats">Player Efficiency</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/compare-leagues">Compare Leagues</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/team_performance">Team Performance</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="section-title">Player Efficiency Stats for {{ selected_league }}</h1>
+
+        <form method="POST" action="/stats">
+            <div class="form-group">
+                <label for="league">Choose a League:</label>
+                <select class="form-control" id="league" name="league" onchange="this.form.submit()">
+                    <option value="La Liga" {% if selected_league == 'La Liga' %}selected{% endif %}>La Liga</option>
+                    <option value="Premier League" {% if selected_league == 'Premier League' %}selected{% endif %}>Premier League</option>
+                    <option value="Bundesliga" {% if selected_league == 'Bundesliga' %}selected{% endif %}>Bundesliga</option>
+                    <option value="Serie A" {% if selected_league == 'Serie A' %}selected{% endif %}>Serie A</option>
+                </select>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <h2>Player Efficiency (Goals per Shots on Target)</h2>
+                    <!-- Efficiency table -->
+                    {{ efficiency_table|safe }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <h2>Efficiency Chart</h2>
+                    <canvas id="efficiencyChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Chart.js Script -->
+    <script>
+        const ctx = document.getElementById('efficiencyChart').getContext('2d');
+        const efficiencyChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ efficiency_names|safe }},
+                datasets: [{
+                    label: 'Efficiency (%)',
+                    data: {{ efficiency_values|safe }},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
