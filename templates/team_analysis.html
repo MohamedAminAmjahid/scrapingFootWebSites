@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Performance Analysis</title>
+
+    <!-- Bootstrap for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+    <style>
+        body {
+            background-color: #000000; /* Fully black background */
+            color: #ffffff; /* White text for readability */
+            font-family: 'Arial', sans-serif;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .container {
+            margin-top: 40px;
+        }
+        .dataTables_wrapper {
+            margin-top: 20px;
+        }
+        table.dataTable thead {
+            background-color: #333; /* Dark background for table headers */
+            color: white;
+        }
+        table.dataTable tbody tr {
+            background-color: #111; /* Darker row background */
+            color: white; /* White text for readability */
+        }
+        table.dataTable tbody tr:hover {
+            background-color: #555; /* Highlighted row on hover */
+        }
+        .card-header {
+            background-color: #000000; /* Black header background */
+            color: white;
+        }
+        .card-body {
+            background-color: #111; /* Black card body */
+            color: white; /* White text inside card */
+        }
+        .img-fluid {
+            margin-top: 20px;
+            max-width: 80%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #bbbbbb;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Football Stats</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stats">Top Players</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stats">Player Efficiency</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/compare-leagues">Player Comparisons Across Leagues</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/team_analysis">Team Insights</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/team_performance">Team Performance in league</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/league_table">League Insights</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Team Performance Analysis</h1>
+
+        <!-- Display Home and Away Performance -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        Home Performance
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Home Wins: {{ home_away_performance['Home Wins'] }}</li>
+                            <li>Home Draws: {{ home_away_performance['Home Draws'] }}</li>
+                            <li>Home Losses: {{ home_away_performance['Home Losses'] }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        Away Performance
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Away Wins: {{ home_away_performance['Away Wins'] }}</li>
+                            <li>Away Draws: {{ home_away_performance['Away Draws'] }}</li>
+                            <li>Away Losses: {{ home_away_performance['Away Losses'] }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Display Performance Graphs -->
+        <div class="row">
+            <!-- Home vs Away Performance Graph -->
+            <div class="col-lg-6 text-center">
+                <img src="{{ performance_image }}" alt="Home vs Away Performance Graph" class="img-fluid">
+            </div>
+
+        </div>
+        
+
+        <!-- Table of match results -->
+        <div class="table-responsive">
+            {{ tables|safe }}
+        </div>
+    </div>
+    
+    <!-- Initialize DataTables -->
+    <script>
+        $(document).ready(function () {
+            $('.data').DataTable({
+                "ordering": false,
+                "paging": true,
+                "info": false,
+                "searching": true,
+                "lengthChange": false
+            });
+        });
+    </script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

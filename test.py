@@ -9,7 +9,11 @@ def parse_percentile(value):
 
 def scrape_team_stats(team_url):
     # Specify the path to your ChromeDriver
+<<<<<<< HEAD
     chrome_driver_path = 'C:/Users/Amjahid Mohamed Amin/Downloads/chromedriver-win64/chromedriver-win64/chromedriver.exe'  # Update this with your actual path
+=======
+    chrome_driver_path = './driver/chromedriver.exe'  # Update this with your actual path
+>>>>>>> 9841ad6 (Added league and team scraping, data visualization, and analysis features)
 
     # Set up the ChromeDriver using Service
     service = Service(executable_path=chrome_driver_path)
