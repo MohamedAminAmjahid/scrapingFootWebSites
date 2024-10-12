@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Stats Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #2a2a2a; /* Dark background */
+            color: #fff; /* White text */
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .card {
+            background-color: #333; /* Dark card background */
+            color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        p {
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Football Stats</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stats">Top Players</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stats">Player Efficiency</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/compare-leagues">Player Comparisons Across Leagues</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/team_analysis">Team Insights</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/team_performance">Team Performance in league</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/league_table">League Insights</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="section-title">Football Stats Project</h1>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <h2>Project Overview</h2>
+                    <p>
+                        Welcome to the Football Stats Project! This project is designed to provide an interactive platform to analyze and compare football statistics, allowing you to explore detailed team performance, player efficiency, and compare different leagues.
+                    </p>
+                    <p>
+                        The project leverages data scraping techniques to extract real-time data from football statistics websites and displays this data in a user-friendly format. You can view team performance, player efficiency, and compare the top players across different leagues.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>Functionalities</h2>
+                    <ul>
+                        <li><strong>Team Performance:</strong> Explore detailed performance statistics for your favorite football teams. This includes goals, attacking, possession, defending, and more.</li>
+                        <li><strong>Player Efficiency:</strong> Compare players based on their shooting efficiency (goals per shots on target). This feature allows you to see which players are the most accurate in front of goal.</li>
+                        <li><strong>Compare Leagues:</strong> Compare the top players from different leagues based on their shooting precision. This visual comparison helps in identifying the best shooters across different leagues.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h2>How It Works</h2>
+                    <p>
+                        This project uses a combination of web scraping with <strong>BeautifulSoup</strong> and <strong>Selenium</strong> to gather the most up-to-date statistics from trusted football websites. The data is then processed and visualized using <strong>Chart.js</strong> to create interactive charts.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>Get Started</h2>
+                    <p>
+                        Use the navigation bar to start exploring the different features. You can:
+                    </p>
+                    <ul>
+                        <li><a href="/team_performance" class="btn btn-primary">Check Team Performance</a></li>
+                        <li><a href="/stats" class="btn btn-primary">Explore Player Efficiency</a></li>
+                        <li><a href="/compare-leagues" class="btn btn-primary">Compare Leagues</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

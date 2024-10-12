@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Performance</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #2a2a2a; /* Dark background */
+            color: #fff; /* White text */
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .form-control {
+            background-color: #444; /* Dark background for dropdown */
+            color: white;
+            border: none;
+        }
+        .form-control:focus {
+            box-shadow: none;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .table {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            background-color: #333; /* Dark table background */
+            color: white;
+            border: none;
+        }
+        .table th {
+            background-color: #444; /* Darker background for table headers */
+        }
+        .table td, .table th {
+            border-color: #555; /* Border color for table */
+            text-align: center;
+        }
+        .radar-chart-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        #radarChart {
+            max-width: 500px;
+            width: 100%;
+            height: auto;
+        }
+        .team-name {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Football Stats</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stats">Top Players</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stats">Player Efficiency</a>
+                </li>
+                <li class="nav-item">
+<<<<<<< HEAD
+                    <a class="nav-link" href="/compare-leagues">Compare Leagues</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/team_performance">Team Performance</a>
+=======
+                    <a class="nav-link" href="/compare-leagues">Player Comparisons Across Leagues</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/team_analysis">Team Insights</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/team_performance">Team Performance in league</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/league_table">League Insights</a>
+>>>>>>> 9841ad6 (Added league and team scraping, data visualization, and analysis features)
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="section-title">Team Performance</h1>
+
+        <!-- Dropdown for team selection -->
+        <form method="POST" action="/team_performance">
+            <div class="form-group">
+                <label for="team-select">Select a Team:</label>
+                <select class="form-control" id="team-select" name="team">
+                    <option value="Barcelona" {% if team_name == 'Barcelona' %}selected{% endif %}>Barcelona</option>
+                    <option value="Real Madrid" {% if team_name == 'Real Madrid' %}selected{% endif %}>Real Madrid</option>
+                    <option value="Manchester United" {% if team_name == 'Manchester United' %}selected{% endif %}>Manchester United</option>
+                    <option value="Liverpool" {% if team_name == 'Liverpool' %}selected{% endif %}>Liverpool</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Show Performance</button>
+        </form>
+
+        <!-- Team Performance Stats Table -->
+        <div class="team-name">{{ team_name }}</div>
+        <table class="table table-bordered">
+            <tbody>
+                <tr><td>Season</td><td>{{ Season }}</td></tr>
+                <tr><td>League</td><td>{{ League }}</td></tr>
+                <tr><td>Goals</td><td>{{ Goals }}</td></tr>
+                <tr><td>Attacking</td><td>{{ Attacking }}</td></tr>
+                <tr><td>Possession</td><td>{{ Possession }}</td></tr>
+                <tr><td>Counters</td><td>{{ Counters }}</td></tr>
+                <tr><td>Defending</td><td>{{ Defending }}</td></tr>
+                <tr><td>Physicality</td><td>{{ Physicality }}</td></tr>
+                <tr><td>Pressing</td><td>{{ Pressing }}</td></tr>
+            </tbody>
+        </table>
+
+        <!-- Radar Chart -->
+        <div class="radar-chart-container">
+            <canvas id="radarChart"></canvas>
+        </div>
+        
+    </div>
+
+    <!-- Optional Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Chart.js for Radar Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        const radarChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Goals', 'Attacking', 'Possession', 'Counters', 'Defending', 'Physicality', 'Pressing'],
+                datasets: [{
+                    label: 'Team Performance',
+                    data: [
+                        {{ Goals | safe }},
+                        {{ Attacking | safe }},
+                        {{ Possession | safe }},
+                        {{ Counters | safe }},
+                        {{ Defending | safe }},
+                        {{ Physicality | safe }},
+                        {{ Pressing | safe }}
+                    ],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(75, 192, 192, 1)'
+                }]
+            },
+            options: {
+                scale: {
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ selected_league }} - League Table</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #2a2a2a;
+            color: #fff;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .card {
+            background-color: #333;
+            color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .table {
+            margin-bottom: 0;
+        }
+        .table th {
+            background-color: #444;
+            border-color: #555;
+        }
+        .table td {
+            border-color: #555;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Football Stats</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stats">Top Players</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stats">Player Efficiency</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/compare-leagues">Player Comparisons Across Leagues</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/team_analysis">Team Insights</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/team_performance">Team Performance in league</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/league_table">League Insights</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="section-title">League Table - {{ selected_league }}</h1>
+
+        <!-- League and Metric Selection Dropdown -->
+        <form method="POST" action="/league_table">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="league">Choose a League:</label>
+                    <select class="form-control" id="league" name="league" onchange="this.form.submit()">
+                        {% for league in leagues %}
+                            <option value="{{ league }}" {% if selected_league == league %}selected{% endif %}>{{ league }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="metric">Choose a Metric:</label>
+                    <select class="form-control" id="metric" name="metric" onchange="this.form.submit()">
+                        {% for metric in metrics %}
+                            <option value="{{ metric }}" {% if selected_metric == metric %}selected{% endif %}>{{ metric }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <!-- League Table Card -->
+        <div class="card">
+            <h2>Total Goals: {{ total_goals }}</h2>
+            <h2>Total Points: {{ total_points }}</h2>
+            <!-- League table rendered in HTML -->
+            {{ league_table|safe }}
+        </div>
+
+        <!-- Pie Chart Card -->
+        <div class="card">
+            <h2>Goals Distribution</h2>
+            <img src="data:image/png;base64,{{ pie_chart_data }}" class="img-fluid" alt="Goals Distribution Pie Charts">
+        </div>
+
+        <!-- Boxplot Card -->
+        <div class="card">
+            <h2>Goals For and Goals Against by Team (Bar Chart)</h2>
+<img src="data:image/png;base64,{{ boxplot_data }}" class="img-fluid" alt="Goals For and Goals Against Bar Chart">
+
+
+        </div>
+    </div>
+
+    <!-- Optional Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
